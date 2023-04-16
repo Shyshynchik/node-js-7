@@ -2,13 +2,17 @@
   "name": "project",
   "version": "1.0.0",
   "description": "My Node.js app",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start": "nodemon index.js"
-  },
-  "dependencies": {
+    "start": "npx nodemon index.ts"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "@types/events": "^3.0.0",
+    "@types/node": "^18.15.11",
+    "nodemon": "^2.0.22",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.1"
   }
 }
