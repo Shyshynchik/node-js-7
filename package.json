@@ -4,7 +4,8 @@
   "description": "My Node.js app",
   "main": "index.ts",
   "scripts": {
-    "start": "npx nodemon index.ts"
+    "start": "npx nodemon index.ts",
+    "start-2": "npx ts-node streams.ts"
   },
   "devDependencies": {
     "@types/events": "^3.0.0",
