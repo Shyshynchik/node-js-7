@@ -5,7 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "start": "npx nodemon index.ts",
-    "start-2": "npx ts-node streams.ts"
+    "start-2": "npx ts-node streams.ts",
+    "start-3": "npx nodemon main.ts",
+    "start-4": "npx nodemon second.ts"
   },
   "devDependencies": {
     "@types/events": "^3.0.0",
