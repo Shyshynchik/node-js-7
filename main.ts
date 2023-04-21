@@ -33,6 +33,27 @@ const handleResponse = function (res: ServerResponse, response: IncomingMessage)
     });
 }
 
+const sendPost = function (postOptions: any, res: ServerResponse, postData?: any,) {
+    let responseForm = http.request(postOptions, (_res: any) => {
+        let message = '';
+
+        _res.on('data', (chunk: any) => {
+            message += chunk;
+        });
+
+        _res.on('end', () => {
+            res.statusCode = _res.statusCode;
+            res.setHeader('Content-Type', 'text/plain');
+            res.end(message);
+        });
+    });
+    if (postData) {
+        responseForm.write(postData);
+    }
+
+    responseForm.end();
+}
+
 const server = http.createServer(function (req: IncomingMessage, res: ServerResponse) {
     switch (req.url) {
         case '/get':
@@ -64,21 +85,35 @@ const server = http.createServer(function (req: IncomingMessage, res: ServerResp
                 }
             };
 
-            const response = http.request(postOptions, (_res: any) => {
-                let message = '';
+            sendPost(postOptions, res);
+            break;
+        case '/form':
+            if (req.method !== METHOD_POST) {
+                methodNotAllowed(res);
+                break;
+            }
 
-                _res.on('data', (chunk: any) => {
-                    message += chunk;
-                });
+            let rawData = ''
 
-                _res.on('end', () => {
-                    res.statusCode = _res.statusCode;
-                    res.setHeader('Content-Type', 'text/plain');
-                    res.end(message);
-                });
+            req.on('data', function (chunk) {
+                rawData += chunk;
             });
 
-            response.end();
+            req.on('end', () => {
+                let options = {
+                    host: REDIRECT_HOST,
+                    port: REDIRECT_PORT,
+                    path: '/form',
+                    method: METHOD_POST,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Content-Length': rawData.length
+                    }
+                };
+
+                sendPost(options, res, rawData);
+            });
+
             break;
         default:
             res.statusCode = 400;

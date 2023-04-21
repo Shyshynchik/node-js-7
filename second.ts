@@ -35,6 +35,25 @@ const server = http.createServer(function (req: IncomingMessage, res: ServerResp
             res.setHeader('Content-Type', 'text/plain');
             res.end('Hello, World from POST');
             break;
+        case '/form':
+            if (req.method !== METHOD_POST) {
+                methodNotAllowed(res);
+                return;
+            }
+            let rawData = ''
+
+            req.on('data', function (chunk) {
+                rawData += chunk;
+            });
+
+            req.on('end', () => {
+                console.log(rawData);
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'text/plain');
+                res.end(rawData);
+            });
+
+            break;
         default:
             res.statusCode = 400;
             res.setHeader('Content-Type', 'text/plain');

@@ -3,3 +3,11 @@ GET localhost:8080/get
 POST localhost:8080/get
 ###
 POST localhost:8080/post
+###
+POST localhost:8080/form
+Content-Type: application/json
+
+{
+  "test": "test",
+  "samara": "samara"
+}
