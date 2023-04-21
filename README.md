@@ -1,6 +1,6 @@
 # Node-js 7 
 ### default.conf
-```
+```nginx configuration
     server {
         listen 80;
         server_name localhost;
@@ -22,7 +22,7 @@
 
 ```
 ### Dockerfile
-```
+``` dockerfile
 FROM node:latest
 
 WORKDIR /app
@@ -43,7 +43,7 @@ RUN npm install
 CMD ["npm", "start"]
 ```
 ### docker-compose.yaml
-```
+``` yaml
 version: "2"
 
 services:
